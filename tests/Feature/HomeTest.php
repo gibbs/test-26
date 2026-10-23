@@ -1,7 +1,7 @@
 <?php
 
-use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Support\Facades\Http;
+use Inertia\Testing\AssertableInertia as Assert;
 
 use function Pest\Laravel\get;
 
