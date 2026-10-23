@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'rick_and_morty' => [
+        'url' => env('RICK_AND_MORTY_URL', 'https://rickandmortyapi.com/api'),
+        'timeout' => (int) env('RICK_AND_MORTY_TIMEOUT', 5),
+        'attempts' => (int) env('RICK_AND_MORTY_ATTEMPTS', 2),
+        'cache' => [
+            (int) env('RICK_AND_MORTY_CACHE_FRESH', 86400),
+            (int) env('RICK_AND_MORTY_CACHE_EXPIRE', 604800),
+        ],
+    ],
+
 ];
