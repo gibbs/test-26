@@ -30,7 +30,7 @@ final readonly class RickAndMortyClient
      * @throws RequestException
      * @throws TooManyRequestsHttpException
      */
-    public function get(string $path, array $query = []): array
+    public function get(string $path, array $query = []): ?array
     {
         // Sort the query for consistent caching
         ksort($query);
@@ -40,7 +40,7 @@ final readonly class RickAndMortyClient
             $this->getCacheKey($path, $query),
             $this->cache,
             fn (): array => $this->request($path, $query)
-        );
+        ) ?: null;
     }
 
     /**
@@ -69,7 +69,7 @@ final readonly class RickAndMortyClient
 
         // Cache 404 responses to reduce redundant API requests
         if ($response->notFound()) {
-            return ['data' => []];
+            return [];
         }
 
         return (array) $response->throw()->json();
