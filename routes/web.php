@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::middleware('throttle:web')->group(function () {
-    Route::get('/', fn () => Inertia::render('Home', ['appName' => config('app.name')]))->name('home');
-});
+Route::middleware('throttle:web')
+    ->controller(Controllers\CharacterController::class)->group(function () {
+        Route::get('/', 'index')->name('home');
+    });

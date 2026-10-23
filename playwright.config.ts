@@ -19,7 +19,10 @@ export default defineConfig({
               command: 'php artisan serve --host=127.0.0.1 --port=8000',
               url: baseURL,
               // Redis is only available inside Sail, so fall back to file cache for host/CI runs.
-              env: { CACHE_STORE: process.env.CACHE_STORE ?? 'file' },
+              env: {
+                  CACHE_STORE: process.env.CACHE_STORE ?? 'file',
+                  SESSION_DRIVER: process.env.SESSION_DRIVER ?? 'file',
+              },
               reuseExistingServer: !process.env.CI,
           },
 });
