@@ -47,6 +47,7 @@ jobs:
         options: --health-cmd "redis-cli ping" --health-interval 5s --health-retries 5
     env:
       CACHE_STORE: redis
+      SESSION_DRIVER: redis
       REDIS_HOST: 127.0.0.1
     steps:
       - uses: actions/checkout@v5
