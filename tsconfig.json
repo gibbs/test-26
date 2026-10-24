@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "noEmit": true,
+        "isolatedModules": true,
+        "skipLibCheck": true,
+        "verbatimModuleSyntax": true,
+        "jsx": "preserve",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "types": ["vite/client", "node"],
+        "paths": {
+            "@/*": ["./resources/js/*"]
+        }
+    },
+    "include": ["resources/js/**/*.ts", "resources/js/**/*.vue", "vite.config.ts", "playwright.config.ts", "tests/playwright/**/*.ts"]
+}

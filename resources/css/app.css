@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@source '../views';
+
+:root {
+    color-scheme: dark;
+}

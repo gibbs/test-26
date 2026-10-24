@@ -1,150 +1,85 @@
-# PHP Developer Technical Assessment  
-## Rick and Morty Encyclopedia
+# Rick and Morty Encyclopedia
 
-## Overview
+[![CI](https://github.com/gibbs/test-26/actions/workflows/ci.yml/badge.svg)](https://github.com/gibbs/test-26/actions/workflows/ci.yml)
 
-This exercise is intended to evaluate your ability to design and build a **small production-quality web application using modern PHP practices**.
+An encyclopedia of Rick and Morty characters using the public [Rick and Morty API](https://rickandmortyapi.com).
 
-You will create a web-based encyclopedia using data from the Rick and Morty API.
+## Stack Overview
 
-The emphasis of this assessment is on:
+- Laravel 13
+- PHP 8.5
+- Redis
+- Inertia 3
+- Vue 3.5
+- Tailwind 4
+- Pest
+- Playwright
+- Larastan
+- Pint
 
-- **Clean architecture and maintainable code**
-- **Proper MVC separation**
-- **Object-oriented PHP**
-- API integration
-- Security and resilience
-- Performance and usability
-- Thoughtful engineering decisions
+## Environment Setup
 
-Visual design is considered a bonus, but **functionality, code quality, and implementation approach are the primary evaluation criteria**.
+The initial setup requires PHP 8.3+ and Composer (for Sail).
 
----
+```bash
+# Copy dotenv config
+cp .env.example .env
 
-# Technical Requirements
+# Install dependencies (required locally for Sail)
+composer install
 
-Your solution **must** use:
+# Start sail containers
+./vendor/bin/sail up -d
 
-- **PHP 8.3 or higher**
-- Composer
-- Git
+# Laravel setup
+./vendor/bin/sail artisan key:generate
+touch database/database.sqlite
+./vendor/bin/sail artisan migrate
 
-You may use any PHP framework, front-end framework, CSS library, or Composer packages you feel are appropriate.
+# NPM setup
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run dev
+```
 
-However:
+## Development
 
-- **All communication with the Rick and Morty API must be implemented using your own application code**
-- You may use generic HTTP clients/libraries (such as Guzzle, Symfony HTTP Client, cURL wrappers, etc.)
-- **You must not use SDKs, wrappers, or dedicated libraries built specifically for the Rick and Morty API**
+```bash
+./vendor/bin/sail up -d
+npm run dev
+```
 
----
+## Build
 
-# Application Requirements
+### Frontend
 
-Your application **must follow a clear MVC structure** and use **object-oriented PHP throughout**.
+```bash
+npm run build
+```
 
-The application should allow users to:
+### Production Image
 
-## Character Listing
+A multi-stage `Dockerfile` build is available based on `php:8.5-fpm-alpine`. Example build:
 
-Display a browsable list of Rick and Morty characters with:
+```bash
+DOCKER_BUILD_NAME=rame
+DOCKER_BUILD_TAG=1.0
 
-- **Pagination**
-- **Search functionality**
-- **Filtering functionality**
+docker build -t ${DOCKER_BUILD_NAME}:${DOCKER_BUILD_TAG} -t ${DOCKER_BUILD_NAME}:latest .
+```
 
-The browsing experience should remain responsive and user-friendly when navigating larger datasets.
+## Testing
 
----
+| Command | Description |
+| --- | --- |
+| `composer test` | Pest based unit and feature tests |
+| `composer analyse` | PHPStan analysis at max level |
+| `npm run test:e2e` | Playwright end-to-end tests |
 
-## Character Details
+## Linting
 
-Display detailed information for an individual character, including at minimum:
-
-- At least one image
-- Name
-- Species
-- Origin
-- Episodes in which the character appears
-
----
-
-# API
-
-Use the public Rick and Morty REST API:
-
-Rick and Morty API: https://rickandmortyapi.com
-
-Authentication is not required.
-
-Please note that the API is rate-limited, and your implementation should account for this appropriately where reasonable.
-
----
-
-# Production Readiness
-
-Your submission should be considered **production-ready**.
-
-Please consider:
-
-- Input validation and sanitization
-- Error handling
-- Secure coding practices
-- Protection against common attack vectors
-- Sensible application structure
-- Performance considerations
-- Maintainability and readability
-- Dependency management
-- Environment configuration
-
-You are encouraged to document **architectural decisions, trade-offs, and notable implementation choices** made during development.
-
----
-
-# Candidate Authorship & Use of AI Tools
-
-This assessment is intended to evaluate **your own engineering ability and decision-making**.
-
-You may use developer assistance tools (including AI tools, documentation resources, code completion, and reference materials) as part of your workflow. However:
-
-- **The architecture, implementation, and final submission must be your own work**
-- **You must fully understand, review, and be able to explain all submitted code**
-- **Blindly generated, copy-pasted, or unreviewed AI output is not acceptable**
-- We may discuss implementation decisions, architecture, and specific areas of your code during follow-up conversations
-
-The goal is not to prohibit modern tooling, but to assess your **practical software engineering skills, judgment, and ownership of the submitted solution**.
-
----
-
-# Time Expectation
-
-This assessment is intentionally scoped to be completed within approximately **2–3 hours**.
-
-We are not expecting a fully featured enterprise platform. We are more interested in seeing your:
-
-- Engineering approach
-- Prioritization
-- Implementation quality
-- Understanding of the codebase
-
-…than an overly polished feature set.
-
----
-
-# Submission
-
-To submit your solution:
-
-1. Fork this repository
-2. **Commit your work regularly as you progress**
-3. Submit a link to your completed fork
-
-Your application should be runnable locally from the repository without requiring additional setup beyond standard project installation steps.
-
-Please include **clear setup instructions** in your README.
-
----
-
-# Copyright
-
-All trademarks remain the property of their respective owners.
+| Command | Description |
+| --- | --- |
+| `composer lint` | Pint style checker (with automatic repair) |
+| `vendor/bin/pint --test` | Pint style checker |
+| `npm run types` | Vue/TypeScript type-check |
+| `npm run format` | Prettier formatting for Vue and Typescript files |
