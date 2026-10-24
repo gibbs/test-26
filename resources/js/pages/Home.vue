@@ -74,7 +74,12 @@ function details(character: Character): CardDetail[] {
                 :href="`/characters/${item.id}`"
                 class="block rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600"
             >
-                <Card :title="item.name" :image="item.image" :details="details(item)">
+                <Card
+                    :title="item.name"
+                    :image="item.image"
+                    :srcset="item.srcset"
+                    :details="details(item)"
+                >
                     <template #badge>
                         <StatusPill :status="item.status" />
                     </template>

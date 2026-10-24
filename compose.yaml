@@ -23,6 +23,7 @@ services:
             - sail
         depends_on:
             - redis
+            - imgproxy
     redis:
         image: 'redis:alpine'
         ports:
@@ -38,6 +39,18 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+    imgproxy:
+        image: 'ghcr.io/imgproxy/imgproxy:v3'
+        ports:
+            - '${FORWARD_IMGPROXY_PORT:-8080}:8080'
+        environment:
+            IMGPROXY_KEY: '${IMGPROXY_KEY:-}'
+            IMGPROXY_SALT: '${IMGPROXY_SALT:-}'
+            IMGPROXY_ALLOWED_SOURCES: 'https://rickandmortyapi.com/'
+            IMGPROXY_AUTO_WEBP: 'true'
+            IMGPROXY_AUTO_AVIF: 'true'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
