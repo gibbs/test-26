@@ -1,11 +1,19 @@
 <script setup lang="ts" generic="TItem extends { id: number }">
+import { computed } from 'vue';
 import type { Paginated } from '@/types';
 
-defineProps<{
+const props = defineProps<{
     data: Paginated<TItem>;
     loading: boolean;
+    itemName: string;
     error?: string | null;
 }>();
+
+const total = computed(function () {
+    const name = props.data.count === 1 ? props.itemName : `${props.itemName}s`;
+
+    return `${props.data.count.toLocaleString()} ${name}`;
+});
 defineSlots<{ default(props: { item: TItem }): unknown }>();
 </script>
 
@@ -27,6 +35,10 @@ defineSlots<{ default(props: { item: TItem }): unknown }>();
                         <slot :item="item" />
                     </template>
                 </div>
+
+                <p data-testid="results-count" class="mt-8 text-center text-sm text-neutral-400">
+                    {{ total }}
+                </p>
             </template>
         </section>
     </div>
