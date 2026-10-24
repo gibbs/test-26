@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Icon from '@/components/Icon.vue';
+
 defineProps<{
     page: number;
     pages: number;
@@ -6,18 +8,40 @@ defineProps<{
 defineEmits<{
     change: [page: number];
 }>();
+
+const button =
+    'cursor-pointer rounded-lg border-2 border-emerald-900 bg-neutral-900 p-2.5 transition hover:border-lime-600 hover:bg-emerald-950 disabled:pointer-events-none disabled:opacity-20';
 </script>
 
 <template>
-    <nav data-testid="pagination" v-if="pages > 1">
-        <button type="button" :disabled="page <= 1" @click="$emit('change', page - 1)">
-            Previous
+    <nav
+        data-testid="pagination"
+        v-if="pages > 1"
+        aria-label="Pagination"
+        class="flex items-center gap-1"
+    >
+        <button
+            type="button"
+            :class="button"
+            :disabled="page <= 1"
+            aria-label="Previous page"
+            @click="$emit('change', page - 1)"
+        >
+            <Icon name="chevron-left" />
         </button>
 
-        <span>Page {{ page }} of {{ pages }}</span>
+        <span class="min-w-14 text-center text-sm text-neutral-400 tabular-nums">
+            {{ page }} / {{ pages }}
+        </span>
 
-        <button type="button" :disabled="page >= pages" @click="$emit('change', page + 1)">
-            Next
+        <button
+            type="button"
+            :class="button"
+            :disabled="page >= pages"
+            aria-label="Next page"
+            @click="$emit('change', page + 1)"
+        >
+            <Icon name="chevron-right" />
         </button>
     </nav>
 </template>

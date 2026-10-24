@@ -27,6 +27,8 @@ onBeforeUnmount(() => clearTimeout(timer));
         v-model.trim="value"
         type="search"
         maxlength="100"
+        :aria-label="label"
         :placeholder="label"
+        class="w-full rounded-md border-2 border-emerald-900 hover:border-lime-600 bg-neutral-900 px-3 py-2 text-sm placeholder:text-neutral-500 focus:border-lime-600 focus:ring-1 focus:ring-lime-600 focus:outline-none"
     />
 </template>

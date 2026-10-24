@@ -36,7 +36,7 @@ export function useFilters<TFilters extends Filters>(
     const loading = ref(false);
     const error = ref<string | null>(null);
 
-    function visit(to = 1) {
+    function visit(to = 1, preserveScroll = true) {
         page.value = to;
 
         const query = withoutEmpty({ ...filters, page: to });
@@ -44,7 +44,7 @@ export function useFilters<TFilters extends Filters>(
         router.get(window.location.pathname, query, {
             only: [prop, 'filters'],
             preserveState: true,
-            preserveScroll: true,
+            preserveScroll,
             replace: true,
             onStart() {
                 loading.value = true;
@@ -61,10 +61,15 @@ export function useFilters<TFilters extends Filters>(
         });
     }
 
+    // A new page starts at the top, unlike filter changes which keep the scroll position
+    function goToPage(to: number) {
+        visit(to, false);
+    }
+
     // Any filter change starts again from page 1
     watch(filters, function () {
         visit();
     });
 
-    return { filters, page, loading, error, visit };
+    return { filters, page, loading, error, visit, goToPage };
 }

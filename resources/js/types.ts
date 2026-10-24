@@ -25,3 +25,11 @@ export interface Paginated<TItem> {
 }
 
 export type Filters = Record<string, string | number | null | undefined>;
+
+export type IconName = 'location' | 'gender' | 'species' | 'chevron-left' | 'chevron-right';
+
+export interface CardDetail {
+    icon: IconName;
+    label: string;
+    text: string;
+}

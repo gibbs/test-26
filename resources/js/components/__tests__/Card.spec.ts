@@ -6,7 +6,7 @@ it('renders', function () {
     const wrapper = mount(Card, {
         props: {
             title: 'Rick Sanchez',
-            details: ['Alive'],
+            details: [{ icon: 'species', label: 'Species', text: 'Human' }],
             image: 'https://example.test/rick.jpeg',
         },
     });
