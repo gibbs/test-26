@@ -10,7 +10,7 @@ class HandleInertiaRequests extends Middleware
     protected $rootView = 'app';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function share(Request $request): array
     {
