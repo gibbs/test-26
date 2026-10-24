@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Icon from '@/components/Icon.vue';
+import { buttonClass } from '@/styles';
 
 defineProps<{
     page: number;
@@ -9,8 +10,7 @@ defineEmits<{
     change: [page: number];
 }>();
 
-const button =
-    'cursor-pointer rounded-lg border-2 border-emerald-900 bg-neutral-900 p-2.5 transition hover:border-lime-600 hover:bg-emerald-950 disabled:pointer-events-none disabled:opacity-20';
+const button = `${buttonClass} p-2.5`;
 </script>
 
 <template>

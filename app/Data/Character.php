@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Character DTO
@@ -23,6 +24,8 @@ final readonly class Character
         public string $location,
         /** @var array<array-key, mixed> */
         public array $episodes = [],
+        /** @var list<int> */
+        public array $episodeIds = [],
     ) {}
 
     /** @param array<array-key, mixed> $data */
@@ -39,6 +42,30 @@ final readonly class Character
             origin: Arr::string($data, 'origin.name'),
             location: Arr::string($data, 'location.name'),
             episodes: Arr::array($data, 'episode'),
+            episodeIds: self::getEpisodeIds(Arr::array($data, 'episode')),
         );
+    }
+
+    /**
+     * Return only episode IDs from URLs
+     *
+     * @param  array<array-key, mixed>  $urls
+     * @return list<int>
+     */
+    private static function getEpisodeIds(array $urls): array
+    {
+        $ids = [];
+
+        foreach ($urls as $url) {
+            $id = is_string($url) ? (int) Str::afterLast($url, '/') : 0;
+
+            if ($id === 0) {
+                continue;
+            }
+
+            $ids[] = $id;
+        }
+
+        return $ids;
     }
 }

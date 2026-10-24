@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import Layout from '@/components/Layout.vue';
 import Pagination from '@/components/Pagination.vue';
 import Results from '@/components/Results.vue';
@@ -62,12 +63,23 @@ function details(character: Character): CardDetail[] {
             </div>
         </form>
 
-        <Results :data="characters" :loading="loading" :error="error" v-slot="{ item }">
-            <Card :title="item.name" :image="item.image" :details="details(item)">
-                <template #badge>
-                    <StatusPill :status="item.status" />
-                </template>
-            </Card>
+        <Results
+            :data="characters"
+            :loading="loading"
+            :error="error"
+            item-name="character"
+            v-slot="{ item }"
+        >
+            <Link
+                :href="`/characters/${item.id}`"
+                class="block rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600"
+            >
+                <Card :title="item.name" :image="item.image" :details="details(item)">
+                    <template #badge>
+                        <StatusPill :status="item.status" />
+                    </template>
+                </Card>
+            </Link>
         </Results>
     </Layout>
 </template>
