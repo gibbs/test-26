@@ -7,7 +7,7 @@
         @vite('resources/js/app.ts')
         @inertiaHead
     </head>
-    <body>
+    <body class="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
         @inertia
     </body>
 </html>

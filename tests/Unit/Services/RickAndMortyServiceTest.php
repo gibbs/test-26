@@ -25,3 +25,25 @@ it('returns no characters when none are found', function () {
         ->count->toBe(0)
         ->pages->toBe(0);
 });
+
+it('returns episodes for several ids in one request', function () {
+    Http::fake(['*' => Http::response(jsonFixture('episodes'))]);
+
+    expect(app(RickAndMortyService::class)->episodes([1, 2]))->toHaveCount(2);
+
+    Http::assertSent(fn ($request) => str_ends_with($request->url(), '/episode/1,2'));
+});
+
+it('returns a list when a single episode is requested', function () {
+    Http::fake(['*' => Http::response(jsonFixture('episodes')[0])]);
+
+    expect(app(RickAndMortyService::class)->episodes([1]))->toHaveCount(1);
+});
+
+it('does not send a request without episode ids', function () {
+    Http::fake();
+
+    expect(app(RickAndMortyService::class)->episodes([]))->toBe([]);
+
+    Http::assertNothingSent();
+});

@@ -16,6 +16,7 @@ it('maps a character dto', function () {
         episodes: [
             'https://rickandmortyapi.com/api/episode/1',
             'https://rickandmortyapi.com/api/episode/2',
-        ]
+        ],
+        episodeIds: [1, 2],
     ));
 });

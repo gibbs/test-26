@@ -1,0 +1,6 @@
+public/build
+vendor
+storage
+bootstrap/cache
+playwright-report
+test-results

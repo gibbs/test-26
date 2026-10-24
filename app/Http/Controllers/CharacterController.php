@@ -16,4 +16,14 @@ final class CharacterController extends Controller
             'characters' => fn () => $service->characters($request->validated()),
         ]);
     }
+
+    public function show(int $id, RickAndMortyService $service): Response
+    {
+        $character = $service->character($id) ?? abort(404);
+
+        return Inertia::render('Character', [
+            'character' => $character,
+            'episodes' => fn () => $service->episodes($character->episodeIds),
+        ]);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Clients\RickAndMortyClient;
 use App\Data\Character;
 use App\Data\Characters;
+use App\Data\Episode;
 
 final readonly class RickAndMortyService
 {
@@ -36,5 +37,30 @@ final readonly class RickAndMortyService
         $data = $this->client->get($path);
 
         return $data === null ? null : Character::fromArray($data);
+    }
+
+    /**
+     * Return several episodes in a single request.
+     *
+     * @param  list<int>  $ids
+     * @return list<Episode>
+     */
+    public function episodes(array $ids): array
+    {
+        if ($ids === []) {
+            return [];
+        }
+
+        $episodes = [];
+        $data = $this->client->get('episode/'.implode(',', $ids)) ?? [];
+
+        // Handle a single episode being returned
+        $items = array_is_list($data) ? $data : [$data];
+
+        foreach ($items as $episode) {
+            $episodes[] = Episode::fromArray((array) $episode);
+        }
+
+        return $episodes;
     }
 }
