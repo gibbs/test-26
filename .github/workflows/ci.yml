@@ -37,6 +37,19 @@ jobs:
       - run: vendor/bin/pest --testsuite=Unit
       - run: vendor/bin/pest --testsuite=Feature
 
+  vue:
+    name: Prettier & Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm test
+
   e2e:
     name: Playwright
     runs-on: ubuntu-latest

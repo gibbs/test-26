@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     plugins: [
@@ -19,4 +19,9 @@ export default defineConfig({
             },
         }),
     ],
+    test: {
+        environment: 'jsdom',
+        include: ['resources/js/**/__tests__/**/*.spec.ts'],
+        setupFiles: ['resources/js/vitest.setup.ts'],
+    },
 });
