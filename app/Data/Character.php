@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Services\Imgproxy;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -26,10 +27,11 @@ final readonly class Character
         public array $episodes = [],
         /** @var list<int> */
         public array $episodeIds = [],
+        public string $srcset = '',
     ) {}
 
     /** @param array<array-key, mixed> $data */
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data, ?Imgproxy $imgproxy = null): self
     {
         return new self(
             id: Arr::integer($data, 'id'),
@@ -43,6 +45,7 @@ final readonly class Character
             location: Arr::string($data, 'location.name'),
             episodes: Arr::array($data, 'episode'),
             episodeIds: self::getEpisodeIds(Arr::array($data, 'episode')),
+            srcset: $imgproxy?->srcset(Arr::string($data, 'image')) ?? '',
         );
     }
 

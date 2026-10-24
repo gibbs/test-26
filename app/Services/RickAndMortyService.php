@@ -9,7 +9,10 @@ use App\Data\Episode;
 
 final readonly class RickAndMortyService
 {
-    public function __construct(private RickAndMortyClient $client) {}
+    public function __construct(
+        private RickAndMortyClient $client,
+        private Imgproxy $imgproxy,
+    ) {}
 
     /**
      * Return characters with filters
@@ -25,7 +28,7 @@ final readonly class RickAndMortyService
             return new Characters([], 0, 0);
         }
 
-        return Characters::fromArray($data);
+        return Characters::fromArray($data, $this->imgproxy);
     }
 
     /**
@@ -36,7 +39,7 @@ final readonly class RickAndMortyService
         $path = sprintf('character/%u', $id);
         $data = $this->client->get($path);
 
-        return $data === null ? null : Character::fromArray($data);
+        return $data === null ? null : Character::fromArray($data, $this->imgproxy);
     }
 
     /**

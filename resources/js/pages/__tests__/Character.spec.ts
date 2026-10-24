@@ -11,6 +11,7 @@ const props = {
         type: '',
         gender: 'Male',
         image: 'https://example.test/rick.jpeg',
+        srcset: '',
         origin: 'Earth (C-137)',
         location: 'Citadel of Ricks',
         episodeIds: [1],

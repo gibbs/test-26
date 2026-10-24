@@ -8,6 +8,7 @@ const props = defineProps<{
     title: string;
     details: CardDetail[];
     image?: string;
+    srcset?: string;
 }>();
 
 defineSlots<{ badge?(): unknown }>();
@@ -26,6 +27,8 @@ const src = computed(() => (failed.value ? placeholder : props.image));
         <div v-if="image" class="relative aspect-square bg-neutral-800">
             <img
                 :src="src"
+                :srcset="failed ? undefined : srcset"
+                sizes="(min-width: 1280px) 230px, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                 :alt="title"
                 class="h-full w-full object-cover transition-opacity duration-300"
                 :class="loaded ? 'opacity-100' : 'opacity-0'"

@@ -35,6 +35,8 @@ const imageFailed = ref(false);
             <div class="grid gap-8 md:grid-cols-[300px_1fr]">
                 <img
                     :src="imageFailed ? placeholder : character.image"
+                    :srcset="imageFailed ? undefined : character.srcset"
+                    sizes="(min-width: 768px) 300px, 100vw"
                     :alt="character.name"
                     class="aspect-square w-full rounded border-2 border-emerald-900 bg-neutral-800 object-cover"
                     @error="imageFailed = true"
